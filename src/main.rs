@@ -1,6 +1,6 @@
 use std::io;
 
-fn nth_fibonacci(n: u32) -> i32 {
+fn nth_fibonacci(n: u32) -> u32 {
     match n {
         0 => 0,
         1 => 1,
