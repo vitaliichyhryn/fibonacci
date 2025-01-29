@@ -1,26 +1,33 @@
-use std::io;
+use core::panic;
+use std::env;
 
-fn nth_fibonacci(n: u32) -> u32 {
+fn rec_nth_fib(n: u128) -> u128 {
     match n {
         0 => 0,
         1 => 1,
-        _ => nth_fibonacci(n - 1) + nth_fibonacci(n - 2),
+        _ => rec_nth_fib(n - 1) + rec_nth_fib(n - 2),
     }
 }
 
+fn iter_nth_fib(mut n: u128) -> u128 {
+    let mut a = 0;
+    let mut b = 1;
+    while n != 0 {
+        (a, b) = (b, a + b);
+        n -= 1;
+    }
+    a
+}
+
 fn main() {
-    let n = loop {
-        println!("Enter n.");
-        let mut n = String::new();
-        io::stdin().read_line(&mut n).expect("Couldn't get n.");
-
-        match n.trim().parse() {
-            Ok(n) => break n,
-            Err(_) => continue,
-        }
+    let args: Vec<String> = env::args().collect();
+    let approach = &args[1];
+    let n = args[2].parse().expect("Couldn't get n.");
+    let num = match approach.as_str() {
+        "iter" => iter_nth_fib(n),
+        "rec" => rec_nth_fib(n),
+        _ => panic!(),
     };
-
-    let num = nth_fibonacci(n);
 
     let suffix = match n {
         1 => "st",
