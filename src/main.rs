@@ -10,8 +10,7 @@ fn rec_nth_fib(n: u128) -> u128 {
 }
 
 fn iter_nth_fib(mut n: u128) -> u128 {
-    let mut a = 0;
-    let mut b = 1;
+    let (mut a, mut b) = (0, 1);
     while n != 0 {
         (a, b) = (b, a + b);
         n -= 1;
